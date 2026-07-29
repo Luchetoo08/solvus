@@ -9,23 +9,40 @@ interface StatsCardProps {
 export default function StatsCard({
   title,
   value,
-  color = "from-cyan-500 to-blue-600",
+  color = "from-cyan-500 to-blue-500",
 }: StatsCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.25 }}
-      className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4"
+      whileHover={{
+        y: -5,
+      }}
+      transition={{
+        duration: 0.25,
+      }}
+      className="
+        group
+        relative
+        overflow-hidden
+        rounded-2xl
+        border
+        border-white/10
+        bg-[#151C2C]
+        p-6
+      "
     >
-      <p className="text-xs text-gray-400">{title}</p>
-
       <div
-        className={`mt-3 h-2 rounded-full bg-gradient-to-r ${color}`}
+        className={`absolute left-0 top-0 h-1.5 w-full bg-gradient-to-r ${color}`}
       />
 
-      <h3 className="mt-4 text-2xl font-bold text-white">
+      <p className="text-sm text-gray-400">
+        {title}
+      </p>
+
+      <h2 className="mt-5 text-4xl font-bold text-white">
         {value}
-      </h3>
+      </h2>
+
+      <div className="mt-6 h-1 w-0 rounded-full bg-cyan-400 transition-all duration-300 group-hover:w-full" />
     </motion.div>
   );
 }
