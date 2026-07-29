@@ -1,28 +1,20 @@
-import { motion } from "framer-motion";
-
 export default function HeroDescription() {
   return (
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{
-        delay: 0.2,
-        duration: 0.6,
-      }}
+    <p
       className="
-        mt-6
-        max-w-xl
-        text-base
-        leading-8
-        text-gray-400
+        mt-8
+        max-w-3xl
 
-        sm:text-lg
+        text-lg
+        leading-8
+        text-slate-400
+
+        md:text-xl
       "
     >
-      Diseñamos plataformas modernas,
-      automatizaciones inteligentes y
-      soluciones digitales pensadas para
-      empresas que quieren crecer.
-    </motion.p>
+      Creamos software a medida, plataformas inteligentes y productos
+      tecnológicos que ayudan a las empresas a trabajar mejor,
+      crecer más rápido y tomar mejores decisiones.
+    </p>
   );
 }

@@ -1,15 +1,20 @@
-import Container from "../../layout/Container";
-import HeroBackground from "../../ui/HeroBackground";
-import HeroLayout from "./HeroLayout";
+import HeroBadge from "./HeroBadge";
+import HeroButtons from "./HeroButtons";
+import HeroDescription from "./HeroDescription";
+import HeroTitle from "./HeroTitle";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden py-24 lg:py-36">
-      <HeroBackground />
+    <section className="relative">
+      <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-5xl flex-col items-center justify-center px-6 text-center">
+        <HeroBadge />
 
-      <Container>
-        <HeroLayout />
-      </Container>
+        <HeroTitle />
+
+        <HeroDescription />
+
+        <HeroButtons />
+      </div>
     </section>
   );
 }

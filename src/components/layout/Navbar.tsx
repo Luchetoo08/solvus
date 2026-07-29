@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-import Container from "./Container";
+import Container from "../common/Container";
 
 const links = [
   { name: "Inicio", href: "#" },
