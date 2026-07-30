@@ -2,7 +2,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import {
   ContactShadows,
   Environment,
-  Float,
 } from "@react-three/drei";
 import { Suspense, useRef } from "react";
 import * as THREE from "three";
@@ -19,19 +18,20 @@ function Scene() {
   useFrame(({ camera, clock, pointer }) => {
     const t = clock.getElapsedTime();
 
-    camera.position.x = pointer.x * 0.35;
+    camera.position.x = pointer.x * 0.28;
+
     camera.position.y =
-      0.9 +
-      pointer.y * 0.15 +
-      Math.sin(t * 0.4) * 0.03;
+      0.55 +
+      pointer.y * 0.12 +
+      Math.sin(t * 0.35) * 0.015;
 
-    camera.position.z = 5.4;
+    camera.position.z = 5.9;
 
-    camera.lookAt(0, -0.15, 0);
+    camera.lookAt(0, -0.55, 0);
 
     if (printer.current) {
       printer.current.rotation.y =
-        Math.sin(t * 0.18) * 0.04;
+        Math.sin(t * 0.16) * 0.03;
     }
   });
 
@@ -44,32 +44,26 @@ function Scene() {
 
         <Extruder />
 
-        <Float
-          speed={1.2}
-          rotationIntensity={0}
-          floatIntensity={0.03}
-        >
-          <Brain />
-        </Float>
+        <Brain />
       </group>
 
       <ContactShadows
-        position={[0, -1.5, 0]}
+        position={[0, -1.52, 0]}
         scale={7}
-        blur={2.8}
-        opacity={0.45}
+        blur={3}
+        opacity={0.42}
         far={3}
       />
 
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -1.52, 0]}
+        position={[0, -1.53, 0]}
         receiveShadow
       >
-        <circleGeometry args={[4.2, 64]} />
+        <circleGeometry args={[4.3, 64]} />
 
         <meshStandardMaterial
-          color="#111318"
+          color="#101114"
           roughness={1}
         />
       </mesh>
@@ -84,8 +78,8 @@ export default function Printer() {
         shadows
         dpr={[1, 2]}
         camera={{
-          position: [0, 0.9, 5.4],
-          fov: 28,
+          position: [0, 0.55, 5.9],
+          fov: 30,
         }}
       >
         <Suspense fallback={null}>

@@ -16,8 +16,8 @@ export default function Brain() {
 
     const max = Math.max(size.x, size.y, size.z);
 
-    // Tamaño final del cerebro
-    const scale = 1.45 / max;
+    // Escala final
+    const scale = 1.02 / max;
 
     brain.scale.setScalar(scale);
 
@@ -29,7 +29,7 @@ export default function Brain() {
 
     const fixed = new THREE.Box3().setFromObject(brain);
 
-    // Apoyar sobre la cama
+    // Apoya el cerebro sobre la cama
     brain.position.y -= fixed.min.y;
 
     brain.traverse((child) => {
@@ -39,19 +39,19 @@ export default function Brain() {
       child.receiveShadow = true;
 
       child.material = new THREE.MeshPhysicalMaterial({
-        color: "#bfe7ff",
+        color: "#e4f3ff",
 
-        metalness: 0.08,
-        roughness: 0.12,
+        metalness: 0.05,
+        roughness: 0.22,
 
-        transmission: 0.22,
-        thickness: 0.5,
+        transmission: 0.14,
+        thickness: 0.28,
 
         clearcoat: 1,
         clearcoatRoughness: 0,
 
         emissive: "#38bdf8",
-        emissiveIntensity: 0.28,
+        emissiveIntensity: 0.12,
 
         reflectivity: 1,
       });
@@ -63,11 +63,15 @@ export default function Brain() {
 
     const t = clock.getElapsedTime();
 
-    group.current.rotation.y += 0.002;
+    // Rotación muy lenta
+    group.current.rotation.y = t * 0.08;
 
-    group.current.position.y =
-      -0.985 +
-      Math.sin(t * 1.8) * 0.006;
+    // Posición fija
+    group.current.position.set(
+      0,
+      -1.09,
+      0
+    );
   });
 
   return (
