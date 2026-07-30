@@ -2,7 +2,6 @@ import PrinterFrame from "./PrinterFrame";
 import PrintBed from "./PrintBed";
 import Extruder from "./Extruder";
 import PrinterLights from "./PrinterLights";
-import PrintingObject from "./PrintingObject";
 
 export default function PrinterScene() {
   return (
@@ -15,7 +14,6 @@ export default function PrinterScene() {
 
       <Extruder />
 
-      <PrintingObject />
 
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
