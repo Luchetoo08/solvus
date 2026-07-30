@@ -4,136 +4,160 @@ import * as THREE from "three";
 
 export default function Extruder() {
   const group = useRef<THREE.Group>(null);
+  const fan = useRef<THREE.Mesh>(null);
 
   useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+
     if (!group.current) return;
 
-    group.current.position.x = Math.sin(clock.elapsedTime * 0.65) * 0.9;
-    group.current.position.z = Math.cos(clock.elapsedTime * 0.4) * 0.45;
+    // Movimiento de impresión
+    group.current.position.x = Math.sin(t * 0.8) * 0.95;
+    group.current.position.z = Math.cos(t * 0.65) * 0.45;
+    group.current.position.y = 0.93 + Math.sin(t * 1.6) * 0.01;
+
+    // Ligera inclinación
+    group.current.rotation.z = Math.sin(t * 0.8) * 0.015;
+    group.current.rotation.x = Math.cos(t * 0.6) * 0.01;
+
+    if (fan.current) {
+      fan.current.rotation.z += 0.55;
+    }
   });
 
   return (
-    <group ref={group} position={[0, 1.05, 0]}>
-      {/* Placa del carro */}
-      <mesh castShadow receiveShadow>
-        <boxGeometry args={[0.65, 0.08, 0.38]} />
-        <meshStandardMaterial
-          color="#171717"
-          metalness={1}
-          roughness={0.18}
-        />
-      </mesh>
+    <group ref={group}>
+      {/* ===========================
+          CUERPO PRINCIPAL
+      ============================ */}
 
-      {/* Cuerpo principal */}
-      <mesh position={[0, -0.23, 0]} castShadow receiveShadow>
-        <boxGeometry args={[0.42, 0.42, 0.32]} />
-        <meshStandardMaterial
-          color="#202020"
+      <mesh castShadow receiveShadow>
+        <boxGeometry args={[0.42, 0.34, 0.34]} />
+
+        <meshPhysicalMaterial
+          color="#1a1a1a"
           metalness={0.9}
           roughness={0.25}
+          clearcoat={1}
         />
       </mesh>
 
-      {/* Cubierta frontal */}
-      <mesh position={[0, -0.23, 0.18]} castShadow>
-        <boxGeometry args={[0.38, 0.36, 0.03]} />
-        <meshStandardMaterial
-          color="#2b2b2b"
-          metalness={0.65}
-          roughness={0.28}
-        />
-      </mesh>
+      {/* ===========================
+          CARCASA SUPERIOR
+      ============================ */}
 
-      {/* Ventilador */}
-      <mesh position={[0, -0.23, 0.195]}>
-        <cylinderGeometry args={[0.095, 0.095, 0.02, 40]} />
+      <mesh position={[0, 0.13, 0]}>
+        <boxGeometry args={[0.34, 0.08, 0.28]} />
+
         <meshStandardMaterial
           color="#111111"
-          metalness={0.9}
+          metalness={0.85}
+          roughness={0.22}
+        />
+      </mesh>
+
+      {/* ===========================
+          PLACA FRONTAL
+      ============================ */}
+
+      <mesh position={[0, 0, 0.175]}>
+        <boxGeometry args={[0.28, 0.22, 0.025]} />
+
+        <meshStandardMaterial
+          color="#2c2c2c"
+          metalness={0.8}
           roughness={0.2}
         />
       </mesh>
 
-      {/* Centro ventilador */}
-      <mesh position={[0, -0.23, 0.208]}>
-        <cylinderGeometry args={[0.025, 0.025, 0.03, 24]} />
-        <meshStandardMaterial color="#444" metalness={1} />
+      {/* ===========================
+          VENTILADOR
+      ============================ */}
+
+      <mesh ref={fan} position={[0, 0, 0.188]}>
+        <cylinderGeometry args={[0.085, 0.085, 0.012, 6]} />
+
+        <meshStandardMaterial
+          color="#38bdf8"
+          emissive="#38bdf8"
+          emissiveIntensity={2.2}
+        />
       </mesh>
 
-      {/* Disipador */}
-      {[0, 1, 2, 3, 4].map((i) => (
-        <mesh
-          key={i}
-          position={[0, -0.42 - i * 0.025, -0.02]}
-          castShadow
-        >
-          <boxGeometry args={[0.16, 0.012, 0.16]} />
-          <meshStandardMaterial
-            color="#9b9b9b"
-            metalness={1}
-            roughness={0.12}
-          />
-        </mesh>
-      ))}
+      {/* ===========================
+          LED
+      ============================ */}
 
-      {/* Heatbreak */}
-      <mesh position={[0, -0.58, 0]}>
-        <cylinderGeometry args={[0.02, 0.02, 0.12, 24]} />
+      <mesh position={[0, -0.09, 0.17]}>
+        <boxGeometry args={[0.18, 0.025, 0.01]} />
+
+        <meshBasicMaterial color="#38bdf8" />
+      </mesh>
+
+      {/* ===========================
+          NOZZLE
+      ============================ */}
+
+      <mesh position={[0, -0.25, 0]}>
+        <coneGeometry args={[0.045, 0.13, 32]} />
+
         <meshStandardMaterial
-          color="#bdbdbd"
+          color="#d6a43d"
           metalness={1}
           roughness={0.08}
         />
       </mesh>
 
-      {/* Bloque calentador */}
-      <mesh position={[0, -0.67, 0]}>
-        <boxGeometry args={[0.12, 0.08, 0.12]} />
-        <meshStandardMaterial
-          color="#a56d2b"
-          metalness={0.85}
-          roughness={0.18}
-        />
-      </mesh>
+      {/* ===========================
+          DISIPADOR
+      ============================ */}
 
-      {/* Nozzle */}
-      <mesh position={[0, -0.76, 0]} castShadow>
-        <coneGeometry args={[0.035, 0.09, 32]} />
+      <mesh position={[0, -0.12, 0]}>
+        <cylinderGeometry args={[0.06, 0.07, 0.08, 24]} />
+
         <meshStandardMaterial
-          color="#e5b454"
-          emissive="#ff9d00"
-          emissiveIntensity={0.55}
+          color="#8c8c8c"
           metalness={1}
-          roughness={0.05}
+          roughness={0.12}
         />
       </mesh>
 
-      {/* Sensor izquierdo */}
-      <mesh position={[-0.18, -0.18, 0]}>
-        <boxGeometry args={[0.05, 0.14, 0.08]} />
+      {/* ===========================
+          FILAMENTO
+      ============================ */}
+
+      <mesh position={[0, 0.34, 0]}>
+        <cylinderGeometry args={[0.012, 0.012, 0.48, 20]} />
+
         <meshStandardMaterial
-          color="#2f2f2f"
-          metalness={0.7}
-          roughness={0.25}
+          color="#38bdf8"
+          emissive="#38bdf8"
+          emissiveIntensity={1.5}
         />
       </mesh>
 
-      {/* Sensor derecho */}
-      <mesh position={[0.18, -0.18, 0]}>
-        <boxGeometry args={[0.05, 0.14, 0.08]} />
+      {/* ===========================
+          CABLE
+      ============================ */}
+
+      <mesh position={[0, 0.48, -0.02]}>
+        <cylinderGeometry args={[0.028, 0.028, 0.28, 20]} />
+
         <meshStandardMaterial
-          color="#2f2f2f"
-          metalness={0.7}
-          roughness={0.25}
+          color="#202020"
+          roughness={0.7}
         />
       </mesh>
 
-      {/* Luz del nozzle */}
+      {/* ===========================
+          LUZ DEL NOZZLE
+      ============================ */}
+
       <pointLight
-        position={[0, -0.73, 0]}
-        intensity={4}
-        distance={2}
-        color="#37d7ff"
+        position={[0, -0.18, 0]}
+        intensity={7}
+        distance={1.5}
+        color="#38bdf8"
       />
     </group>
   );

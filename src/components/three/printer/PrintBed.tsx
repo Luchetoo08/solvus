@@ -1,105 +1,173 @@
 export default function PrintBed() {
   return (
-    <group position={[0, -1.08, 0]}>
-      {/* Base inferior */}
+    <group position={[0, -0.98, 0]}>
+      {/* ===========================
+          BASE DEL EJE Y
+      ============================ */}
 
-      <mesh castShadow receiveShadow position={[0, -0.18, 0]}>
-        <boxGeometry args={[2.8, 0.18, 2.8]} />
+      <mesh
+        position={[0, -0.20, 0]}
+        castShadow
+        receiveShadow
+      >
+        <boxGeometry args={[2.35, 0.22, 2.35]} />
         <meshStandardMaterial
-          color="#121212"
+          color="#101010"
           metalness={0.95}
-          roughness={0.2}
+          roughness={0.18}
         />
       </mesh>
 
-      {/* Carro */}
+      {/* ===========================
+          CARRIAGE
+      ============================ */}
 
-      <mesh castShadow receiveShadow position={[0, -0.08, 0]}>
-        <boxGeometry args={[2.55, 0.05, 2.55]} />
+      <mesh
+        position={[0, -0.08, 0]}
+        castShadow
+        receiveShadow
+      >
+        <boxGeometry args={[2.18, 0.06, 2.18]} />
         <meshStandardMaterial
-          color="#2b2b2b"
-          metalness={0.8}
-          roughness={0.3}
+          color="#2a2a2a"
+          metalness={0.82}
+          roughness={0.30}
         />
       </mesh>
 
-      {/* Placa magnética */}
+      {/* ===========================
+          PLACA MAGNÉTICA
+      ============================ */}
 
-      <mesh castShadow receiveShadow position={[0, 0, 0]}>
-        <boxGeometry args={[2.42, 0.03, 2.42]} />
+      <mesh
+        position={[0, 0, 0]}
+        castShadow
+        receiveShadow
+      >
+        <boxGeometry args={[2.05, 0.028, 2.05]} />
         <meshStandardMaterial
-          color="#31363d"
-          metalness={0.35}
-          roughness={0.82}
+          color="#3c4048"
+          metalness={0.45}
+          roughness={0.72}
         />
       </mesh>
 
-      {/* PEI */}
+      {/* ===========================
+          LÁMINA PEI
+      ============================ */}
 
-      <mesh receiveShadow position={[0, 0.021, 0]}>
-        <boxGeometry args={[2.38, 0.008, 2.38]} />
+      <mesh
+        position={[0, 0.018, 0]}
+        receiveShadow
+      >
+        <boxGeometry args={[2, 0.008, 2]} />
+
         <meshStandardMaterial
-          color="#1f2328"
+          color="#1a1f26"
           roughness={1}
           metalness={0.05}
         />
       </mesh>
 
-      {/* Resortes */}
+      {/* Textura simulada */}
 
-      {[
-        [-0.95, -0.08, -0.95],
-        [0.95, -0.08, -0.95],
-        [-0.95, -0.08, 0.95],
-        [0.95, -0.08, 0.95],
-      ].map((p, i) => (
-        <mesh key={i} position={p as [number, number, number]}>
-          <cylinderGeometry args={[0.05, 0.05, 0.18, 18]} />
-          <meshStandardMaterial
-            color="#b7b7b7"
-            metalness={1}
-            roughness={0.08}
-          />
-        </mesh>
-      ))}
+      <mesh position={[0, 0.023, 0]}>
+        <planeGeometry args={[1.96, 1.96]} />
 
-      {/* Perillas */}
-
-      {[
-        [-0.95, -0.2, -0.95],
-        [0.95, -0.2, -0.95],
-        [-0.95, -0.2, 0.95],
-        [0.95, -0.2, 0.95],
-      ].map((p, i) => (
-        <mesh key={i} position={p as [number, number, number]}>
-          <cylinderGeometry args={[0.09, 0.09, 0.05, 32]} />
-          <meshStandardMaterial
-            color="#171717"
-            metalness={0.85}
-            roughness={0.3}
-          />
-        </mesh>
-      ))}
-
-      {/* Guía izquierda */}
-
-      <mesh position={[-1.15, -0.16, 0]}>
-        <boxGeometry args={[0.08, 0.08, 2.6]} />
-        <meshStandardMaterial
-          color="#bcbcbc"
-          metalness={1}
-          roughness={0.08}
+        <meshBasicMaterial
+          color="#242d38"
+          transparent
+          opacity={0.08}
         />
       </mesh>
 
-      {/* Guía derecha */}
+      {/* ===========================
+          RESORTES
+      ============================ */}
 
-      <mesh position={[1.15, -0.16, 0]}>
-        <boxGeometry args={[0.08, 0.08, 2.6]} />
+      {[
+        [-0.82, -0.08, -0.82],
+        [0.82, -0.08, -0.82],
+        [-0.82, -0.08, 0.82],
+        [0.82, -0.08, 0.82],
+      ].map((p, i) => (
+        <mesh
+          key={i}
+          position={p as [number, number, number]}
+        >
+          <cylinderGeometry
+            args={[0.045, 0.045, 0.18, 20]}
+          />
+
+          <meshStandardMaterial
+            color="#c8c8c8"
+            metalness={1}
+            roughness={0.05}
+          />
+        </mesh>
+      ))}
+
+      {/* ===========================
+          PERILLAS
+      ============================ */}
+
+      {[
+        [-0.82, -0.19, -0.82],
+        [0.82, -0.19, -0.82],
+        [-0.82, -0.19, 0.82],
+        [0.82, -0.19, 0.82],
+      ].map((p, i) => (
+        <mesh
+          key={i}
+          position={p as [number, number, number]}
+        >
+          <cylinderGeometry
+            args={[0.085, 0.085, 0.05, 32]}
+          />
+
+          <meshStandardMaterial
+            color="#151515"
+            metalness={0.9}
+            roughness={0.25}
+          />
+        </mesh>
+      ))}
+
+      {/* ===========================
+          GUÍAS LINEALES
+      ============================ */}
+
+      <mesh position={[-0.98, -0.15, 0]}>
+        <boxGeometry args={[0.07, 0.07, 2.05]} />
+
         <meshStandardMaterial
-          color="#bcbcbc"
+          color="#d4d4d4"
           metalness={1}
-          roughness={0.08}
+          roughness={0.05}
+        />
+      </mesh>
+
+      <mesh position={[0.98, -0.15, 0]}>
+        <boxGeometry args={[0.07, 0.07, 2.05]} />
+
+        <meshStandardMaterial
+          color="#d4d4d4"
+          metalness={1}
+          roughness={0.05}
+        />
+      </mesh>
+
+      {/* ===========================
+          LOGO SOLVUS
+      ============================ */}
+
+      <mesh position={[0, 0.026, 0]}>
+        <planeGeometry args={[0.45, 0.12]} />
+
+        <meshBasicMaterial
+          color="#38bdf8"
+          transparent
+          opacity={0.35}
         />
       </mesh>
     </group>
